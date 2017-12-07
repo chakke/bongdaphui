@@ -38,7 +38,7 @@ export class BdpModule {
 
     for (let i = 0; i < 100; i++) {
       let player = new Player();
-      player.onResponseData(i < 10 ? "0000" + i : "000" + i, "name " + i, "" + i, avatars[Utils.randInt(0, avatars.length)]);
+      player.onResponseData(i < 10 ? "0000" + i : "000" + i, "name", "" + i, avatars[Utils.randInt(0, avatars.length)], "0912345678", "heyhey@gmail.com");
       this.players.push(player);
     }
 
@@ -79,6 +79,14 @@ export class BdpModule {
 
     if (team) {
       team.addMember(member);
+    }
+  }
+
+  deleteTeamMember(teamId: number, member: Player) {
+    let team = this.getTeamById(teamId);
+
+    if (team) {
+      team.removeMember(member);
     }
   }
   

@@ -23,6 +23,15 @@ export class Team {
         this.members.push(member);
     }
 
+    removeMember(member: Player){
+        for(let i = 0; i < this.members.length;i++){
+            if(this.members[i].id == member.id){
+                this.members.splice(i, 1);
+                break;
+            }
+        }
+    }
+
     addStrategy(strategy: Map) {
         this.strategies.push(strategy);
     }

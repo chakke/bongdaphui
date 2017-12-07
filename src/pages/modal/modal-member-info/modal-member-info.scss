@@ -1,0 +1,34 @@
+page-modal-member-info {
+    ion-content {
+        background-color: transparent !important;
+        position: relative;
+    }
+    .backdrop {
+        background-color: rgba(black, .7);
+    }
+    .info-container {
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .info {
+        border-radius: 10px;
+        pointer-events: all;
+        background: white;
+        min-width: 70vw;
+        max-width: 80vw;
+        z-index: 10;
+        .avatar {
+            max-height: 16vh;
+            max-width: 16vh;
+            overflow: hidden;
+            border-radius: 50%;
+        }
+        .detail {
+            .right-col {
+                max-width: 50vw;
+            }
+        }
+    }
+}

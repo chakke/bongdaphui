@@ -13,10 +13,21 @@
     <div class="add-button a3-container a3-items-center a3-justify-center" (click)="onClickAddMember()">
         <span style="font-size: 2em">+</span>
     </div>
-    <div class="a1-fill-parent member-list">
+    <div class="member-list a1-fill-parent">
         <ion-list>
-            <ion-item *ngFor="let member of team.members" (click)="onClickMember(member)">
-                {{member.name}}
+            <ion-item *ngFor="let member of team.members">
+                <div class="a1-relative a1-fill-parent a3-container a3-items-center">
+                    <div class="avatar a1-margin-right">
+                        <img src={{member.avatar}}>
+                    </div>
+                    <div class="name a1-width-100" (click)="onClickMember(member)">
+                        <span>{{member.number}} - </span> <span>{{member.name}}</span>
+                    </div>
+                    <div class="arr a1-absolute a1-right a3-container a3-items-center a3-justify-center" (click)="onClickDelete(member)">
+                        <ion-icon name="ios-close"></ion-icon>
+                    </div>
+                </div>
+
             </ion-item>
         </ion-list>
     </div>

@@ -1,0 +1,59 @@
+<ion-content>
+    <div class="a1-fill-parent backdrop" (tap)="onClickClose()">
+    </div>
+    <div class="info-container a1-fill-parent a3-container a3-items-center a3-justify-center">
+        <div class="info">
+            <div class="a1-width-100 a1-padding-top a3-container a3-items-center a3-justify-center">
+                <div class="avatar">
+                    <img src="{{mPlayer.avatar}}">
+                </div>
+            </div>
+            <div padding class="detail a1-width-100">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col class="a1-no-padding">
+                            <ion-row>
+                                <div><span>Tên: </span></div>
+                            </ion-row>
+                            <ion-row>
+                                <div><span>Số áo: </span></div>
+                            </ion-row>
+                            <ion-row>
+                                <div><span>SĐT: </span></div>
+                            </ion-row>
+                            <ion-row>
+                                <div><span>Email: </span></div>
+                            </ion-row>
+                        </ion-col>
+                        <ion-col class="right-col a1-no-padding">
+                            <ion-row>
+                                <div class="a1-text-ellipsis">
+                                    <span>{{mPlayer.name}}</span>
+                                </div>
+                            </ion-row>
+                            <ion-row>
+                                <div class="a1-text-ellipsis">
+                                    <span>{{mPlayer.number}}</span>
+                                </div>
+                            </ion-row>
+                            <ion-row>
+                                <div class="a1-text-ellipsis">
+                                    <span>{{mPlayer.phone}}</span>
+                                </div>
+                            </ion-row>
+                            <ion-row>
+                                <div class="a1-text-ellipsis">
+                                    <span>{{mPlayer.email}}</span>
+                                </div>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="a3-justify-center">
+                        <button ion-button (click)="onClickView()">View</button>
+                        <button ion-button (click)="onClickDelete()">Delete</button>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
+    </div>
+</ion-content>
