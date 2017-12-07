@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the BdpManageTeamPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { BdpModule } from '../../providers/bdp-module';
+
+import { TeamOverview } from '../../providers/classes/team';
 
 @IonicPage()
 @Component({
@@ -15,11 +12,32 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class BdpManageTeamPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  teams: Array<TeamOverview> = [];
+
+  constructor(public navCtrl: NavController,
+    public mBdpModule: BdpModule,
+    public navParams: NavParams) {
+    this.getData();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BdpManageTeamPage');
+  }
+
+  getData() {
+    let ts = this.mBdpModule.getTeams();
+
+    ts.forEach(t => {
+      let team = new TeamOverview();
+      team.onResponseData(t);
+      this.teams.push(team);
+    })
+  }
+
+  onClickTeam(team: TeamOverview) {
+    console.log(team);
+
+    this.navCtrl.push("BdpTeamDetailPage", { id: team.id });
   }
 
 }

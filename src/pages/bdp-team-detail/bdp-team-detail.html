@@ -1,0 +1,23 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>{{team.name}}</ion-title>
+        <div class="header-icon" (click)="onClickStrategy()">
+            <ion-icon name="ios-football"></ion-icon>
+        </div>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding no-bounce class="a1-relative">
+    <div class="add-button a3-container a3-items-center a3-justify-center" (click)="onClickAddMember()">
+        <span style="font-size: 2em">+</span>
+    </div>
+    <div class="a1-fill-parent member-list">
+        <ion-list>
+            <ion-item *ngFor="let member of team.members" (click)="onClickMember(member)">
+                {{member.name}}
+            </ion-item>
+        </ion-list>
+    </div>
+</ion-content>

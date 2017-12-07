@@ -1,0 +1,86 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>{{mDatas.title}}</ion-title>
+    </ion-navbar>
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="currentView" (ionChange)="onChangeView()">
+            <ion-segment-button value="{{segment.id}}" *ngFor="let segment of mDatas.segments">
+                {{segment.title}}
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+    <div *ngIf="currentView==this.mDatas.segments[0].id">
+        <ion-list>
+            <form [formGroup]="createForm">
+                <ion-item>
+                    <div class="a3-container a3-justify-center a1-width-100">
+                        <div class="avatar" [ngStyle]="{'background-image': 'url('+ mPlayer.avatar + ')'}">
+                        </div>
+                    </div>
+                </ion-item>
+                <ion-item>
+                    <ion-label stacked>{{mDatas.playerInfo.name}}</ion-label>
+                    <ion-input [class.invalid]="createForm.controls.name.invalid && submitAttempt" formControlName="name" type="text"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="createForm.controls.name.invalid && submitAttempt">
+                    <p class="noti">Tên bao gồm chữ và số, có độ dài
+                        < 30</p>
+                </ion-item>
+                <ion-item>
+                    <ion-label stacked>{{mDatas.playerInfo.phone}}</ion-label>
+                    <ion-input formControlName="phone" type="text"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label stacked>{{mDatas.playerInfo.email}}</ion-label>
+                    <ion-input formControlName="email" type="text"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label stacked>{{mDatas.playerInfo.shirtNumber}}</ion-label>
+                    <ion-input [class.invalid]="createForm.controls.shirtNumber.invalid && submitAttempt" formControlName="shirtNumber" type="number"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="createForm.controls.shirtNumber.invalid && submitAttempt">
+                    <p class="noti">Số áo không hợp lệ</p>
+                </ion-item>
+            </form>
+        </ion-list>
+    </div>
+    <div *ngIf="currentView==this.mDatas.segments[1].id">
+        <button ion-button full (click)="onClickSearch()">
+                    <ion-icon name="ios-search"></ion-icon>
+            </button>
+        <ion-list *ngIf="resultPlayer">
+            <ion-item>
+                <div class="a3-container a3-justify-center a1-width-100">
+                    <div class="avatar" [ngStyle]="{'background-image': 'url('+ resultPlayer.avatar + ')'}">
+                    </div>
+                </div>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>{{mDatas.playerInfo.name}}</ion-label>
+                <ion-input readonly type="text" [(ngModel)]="resultPlayer.name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>{{mDatas.playerInfo.phone}}</ion-label>
+                <ion-input readonly type="text" [(ngModel)]="resultPlayer.phone"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>{{mDatas.playerInfo.email}}</ion-label>
+                <ion-input readonly type="text" [(ngModel)]="resultPlayer.email"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>{{mDatas.playerInfo.shirtNumber}}</ion-label>
+                <ion-input type="number" [(ngModel)]="resultPlayer.number"></ion-input>
+            </ion-item>
+        </ion-list>
+    </div>
+    <button ion-button full *ngIf="currentView==this.mDatas.segments[0].id || resultPlayer" (click)="onClickAdd()">Thêm</button>
+</ion-content>
+
+<div id="loading" class="hidden a3-container a3-items-center a3-justify-center">
+    <bdp-spinner></bdp-spinner>
+</div>

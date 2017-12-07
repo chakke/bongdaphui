@@ -1,0 +1,27 @@
+page-bdp-team-detail {
+    .header-icon {
+        height: 100%;
+        width: 50px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        font-size: 1.4em;
+        ion-icon {
+            margin: auto;
+        }
+    }
+    .add-button {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 3em;
+        height: 3em;
+        border-radius: 50%;
+        border: 2px solid black;
+        z-index: 10;
+    }
+    .member-list {
+        overflow: auto;
+    }
+}

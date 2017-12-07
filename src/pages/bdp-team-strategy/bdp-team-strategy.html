@@ -1,0 +1,54 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Chiến thuật</ion-title>
+        <div class="header-icon" (click)="onClickSuggest()">
+            <ion-icon name="ios-settings"></ion-icon>
+        </div>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding no-bounce>
+
+    <div id="strategy-map">
+        <img id="strategy-content" src="assets/strategy-background.jpg">
+    </div>
+    <div>
+        <button ion-button (tap)="onClickSave()">SAVE</button>
+    </div>
+    <div>
+        <button ion-button (tap)="onClickSave()">SAVE</button>
+    </div>
+    <div>
+        <button ion-button (tap)="onClickSave()">SAVE</button>
+    </div>
+    <div>
+        <button ion-button (tap)="onClickSave()">SAVE</button>
+    </div>
+    <div>
+        <button ion-button (tap)="onClickSave()">SAVE</button>
+    </div>
+    <div>
+        <button ion-button (tap)="onClickSave()">SAVE</button>
+    </div>
+    <div>
+        <button ion-button (tap)="onClickSave()">SAVE</button>
+    </div>
+    <div>
+        <button ion-button (tap)="onClickSave()">SAVE</button>
+    </div>
+    <div>
+        <button ion-button (tap)="onClickSave()">SAVE</button>
+    </div>
+
+
+    <!-- Fabbutton Elements -->
+    <div class="player" *ngFor="let p of mPlayers; let i = index" [style.background-image]="'url('+p.avatar+')'">
+    </div>
+
+    <div class="player-view" *ngFor="let p of mPlayers">
+        <div class="name">{{p.name}}</div>
+        <div class="number">{{p.number}}</div>
+    </div>
+</ion-content>
