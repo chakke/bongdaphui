@@ -18,27 +18,28 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked>{{mDatas.playerInfo.name}}</ion-label>
-                <ion-input [class.invalid]="createForm.controls.name.invalid && submitAttempt" formControlName="name" type="text"></ion-input>
+                <ion-input [class.invalid]="createForm.controls.name.invalid" formControlName="name" type="text" [(ngModel)]="mPlayer.name"></ion-input>
             </ion-item>
-            <ion-item *ngIf="createForm.controls.name.invalid && submitAttempt">
+            <ion-item *ngIf="createForm.controls.name.invalid">
                 <p class="noti">Tên bao gồm chữ và số, có độ dài
                     < 30</p>
             </ion-item>
             <ion-item>
                 <ion-label stacked>{{mDatas.playerInfo.phone}}</ion-label>
-                <ion-input formControlName="phone" type="text"></ion-input>
+                <ion-input formControlName="phone" type="text" [(ngModel)]="mPlayer.phone"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label stacked>{{mDatas.playerInfo.email}}</ion-label>
-                <ion-input formControlName="email" type="text"></ion-input>
+                <ion-input formControlName="email" type="text" [(ngModel)]="mPlayer.email"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label stacked>{{mDatas.playerInfo.shirtNumber}}</ion-label>
-                <ion-input [class.invalid]="createForm.controls.shirtNumber.invalid && submitAttempt" formControlName="shirtNumber" type="number"></ion-input>
+                <ion-input [class.invalid]="createForm.controls.shirtNumber.invalid" formControlName="shirtNumber" type="number" [(ngModel)]="mPlayer.number"></ion-input>
             </ion-item>
-            <ion-item *ngIf="createForm.controls.shirtNumber.invalid && submitAttempt">
+            <ion-item *ngIf="createForm.controls.shirtNumber.invalid">
                 <p class="noti">Số áo không hợp lệ</p>
             </ion-item>
         </form>
     </ion-list>
+    <button ion-button full (click)="onClickSave()">Lưu</button>
 </ion-content>

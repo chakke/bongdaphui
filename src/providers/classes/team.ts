@@ -34,6 +34,15 @@ export class Team {
         }
     }
 
+    getFakeMember(id: string){
+        for (let i = 0; i < this.fakePlayer.length; i++) {
+            if (this.fakePlayer[i].id == id) {
+                return this.fakePlayer[i];
+            }
+        }
+        return null;
+    }
+
     addFakeMember(member: Player) {
         member.id += this.fakePlayer.length;
         this.fakePlayer.push(member);
@@ -48,6 +57,14 @@ export class Team {
         }
     }
 
+    editFakeMember(member: Player){
+        for (let i = 0; i < this.fakePlayer.length; i++) {
+            if (this.fakePlayer[i].id == member.id) {
+                this.fakePlayer[i].setData(member);
+                break;
+            }
+        }
+    }
 
     addStrategy(strategy: Map) {
         this.strategies.push(strategy);

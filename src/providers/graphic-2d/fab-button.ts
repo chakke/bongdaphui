@@ -35,7 +35,7 @@ export class FabButton {
         this.mBound.set(0, 0, 1000, 1000);
     }
     setBoundSize(width: number, height: number) {
-        console.log("boundsize", height);
+        console.log("boundsize", width);
 
         this.mBound.setSize(width, height);
         this.checkOutOfBox();
@@ -195,21 +195,22 @@ export class FabButton {
         if (this.mEventListener) this.mEventListener(GestureEvent.PAN, {});
     }
     checkOutOfBox() {
+        
         this.mPosition.target.set(this.mPosition.current.x, this.mPosition.current.y);
-        if (this.mPosition.current.x < this.mPadding) {
-            this.mPosition.target.x = this.mPadding;
+        if (this.mPosition.current.x < this.lPadding) {
+            this.mPosition.target.x = this.lPadding;
             this.mPosition.animate = true;
         }
-        if (this.mPosition.current.x > this.mBound.size.width - this.mElementSize.width - this.mPadding) {
-            this.mPosition.target.x = this.mBound.size.width - this.mElementSize.width - this.mPadding;
+        if (this.mPosition.current.x > this.mBound.size.width - this.mElementSize.width - this.rPadding) {
+            this.mPosition.target.x = this.mBound.size.width - this.mElementSize.width - 2 * this.rPadding;
             this.mPosition.animate = true;
         }
-        if (this.mPosition.current.y < this.mPadding) {
-            this.mPosition.target.y = this.mPadding;
+        if (this.mPosition.current.y < this.tPadding) {
+            this.mPosition.target.y = this.tPadding;
             this.mPosition.animate = true;
         }
-        if (this.mPosition.current.y > this.mBound.size.height - this.mElementSize.height - this.mPadding) {
-            this.mPosition.target.y = this.mBound.size.height - this.mElementSize.height - this.mPadding;
+        if (this.mPosition.current.y > this.mBound.size.height - this.mElementSize.height - this.bPadding) {
+            this.mPosition.target.y = this.mBound.size.height - this.mElementSize.height - this.bPadding;
             this.mPosition.animate = true;
         }
     }
@@ -228,13 +229,24 @@ export class FabButton {
 
     // BDP private
     id: number;
+    lPadding = 0;
+    rPadding = 0;
+    tPadding = 0;
+    bPadding = 0;
 
     setId(id: number) {
         this.id = id;
     }
 
-    setPadding(padding: number) {
-        this.mPadding = padding;
+    // setPadding(padding: number) {
+    //     this.mPadding = padding;
+    // }
+
+    setPadding(top: number, right: number, bottom: number, left: number) {
+        this.tPadding = top;
+        this.rPadding = right;
+        this.bPadding = bottom;
+        this.lPadding = left;
     }
 
     getPosition() {

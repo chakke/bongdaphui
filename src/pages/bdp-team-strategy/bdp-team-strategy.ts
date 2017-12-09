@@ -120,9 +120,11 @@ export class BdpTeamStrategyPage {
     let view = document.getElementsByClassName("player-view");
     let arr = [].slice.call(elm);
 
+    let lPadding = (this.content.contentWidth - this.strategyElm.clientWidth) / 2
+
     arr.forEach(element => {
       let index = arr.indexOf(element);
-      let calculatedWidth = this.contentPadding + this.mPlayers[index].x * this.strategyElm.clientWidth;
+      let calculatedWidth = lPadding + this.mPlayers[index].x * this.strategyElm.clientWidth;
       let calculatedHeight = this.contentPadding + this.mPlayers[index].y * this.strategyElm.clientHeight;
       this.mPlayers[index].setLocation(calculatedWidth, calculatedHeight);
 
@@ -130,8 +132,8 @@ export class BdpTeamStrategyPage {
 
       player.create(element);
       player.setRelativeHTMLContent(<HTMLElement>view[index])
-      player.setPadding(this.contentPadding);
-      player.setBoundSize(this.content.contentWidth, this.strategyElm.clientHeight + 2 * this.contentPadding);
+      player.setPadding(this.contentPadding, lPadding, 0, lPadding);
+      player.setBoundSize(this.strategyElm.clientWidth + 2 * this.contentPadding +lPadding, this.strategyElm.clientHeight + 2 * this.contentPadding);
       player.setEventListener((event, data) => {
         this.onPlayerEvents(event, data);
       });

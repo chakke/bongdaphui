@@ -50,6 +50,9 @@ export class BdpModule {
       let player = this.getPlayerById(nId < 10 ? "0000" + nId : "000" + nId);
       team.addMember(player);
     }
+    let fakeP = new Player();
+    fakeP.onResponseData("-111", "AA", "12", "assets/player/anonymous.png");
+    team.addFakeMember(fakeP);
   }
 
   getTeams(){
@@ -90,6 +93,15 @@ export class BdpModule {
     }
   }
   
+  getTeamFakeMember(teamId: number, memberId: string){
+    let team = this.getTeamById(teamId);
+
+    if (team) {  
+      return team.getFakeMember(memberId);
+    }
+    return null;
+  }
+
   addTeamFakeMember(teamId: number, member: Player) {
     let team = this.getTeamById(teamId);
 
@@ -105,6 +117,15 @@ export class BdpModule {
       team.removeFakeMember(member);
     }
   }
+
+  editFakeMember(teamId: number, member: Player){
+    let team = this.getTeamById(teamId);
+
+    if (team) {
+      team.editFakeMember(member);
+    }
+  }
+
   searchPlayer(id: string) {
     return new Promise((res, rej) => {
       for (let i = 0; i < this.players.length; i++) {
