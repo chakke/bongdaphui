@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+
+import { FirebaseServiceProvider } from "../../providers/classes/firebase-service/firebase-service";
+import { Observable } from 'rxjs/Observable';
+import { Stadium, StadiumInterface } from "../../providers/classes/interface/stadium";
 
 interface itemHistory {
   type: string;
@@ -73,7 +77,8 @@ export class BdpManageBudgetPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public firebaseService: FirebaseServiceProvider
   ) {
   }
 
@@ -90,6 +95,7 @@ export class BdpManageBudgetPage {
         name: 'nameOfSponsor',
         placeholder: 'Tên nhà tài trợ'
       }, {
+        type: 'number',
         name: 'monney',
         placeholder: 'Số tiền'
       }],
@@ -122,6 +128,7 @@ export class BdpManageBudgetPage {
         name: 'nameOfPersoner',
         placeholder: 'Tên thành viên'
       }, {
+        type: 'number',
         name: 'monney',
         placeholder: 'Số tiền'
       }],
@@ -154,6 +161,7 @@ export class BdpManageBudgetPage {
         name: 'nameOfStadium',
         placeholder: 'Tên sân bóng'
       }, {
+        type: 'number',
         name: 'monney',
         placeholder: 'Số tiền'
       }],
@@ -184,7 +192,11 @@ export class BdpManageBudgetPage {
   showDownPayment(item: downPayment) {
     let alert = this.alertCtrl.create({
       title: 'Thông tin sân',
-      message: "Tên sân" + item.nameOfStadium + "Đặt cọc" + item.monney + "đ" + "Số đt" + item.phoneStadiumOwner,
+      message:
+        "Tên sân:" + '&emsp;' + item.nameOfStadium + '<br>' +
+        "Đặt cọc:" + '&emsp;' + item.monney + "đ" + '<br>' +
+        "Số đt:" + '&emsp;&emsp;' + item.phoneStadiumOwner + '<br>' +
+        "Địa chỉ:" + '&emsp;' + item.address,
       buttons: [{
         text: 'Ok'
       }]
@@ -193,35 +205,59 @@ export class BdpManageBudgetPage {
   }
   /**Đặt thêm sân */
   addDownPayment() {
-    let alert = this.alertCtrl.create({
-      title: 'Đặt sân',
-      inputs: [{
-        name: 'nameOfStadium',
-        placeholder: 'Tên sân bóng'
-      }, {
-        name: 'monney',
-        placeholder: 'Số tiền đặt cọc'
-      }, {
-        name: 'address',
-        placeholder: 'Địa chỉ'
-      }, {
-        name: 'timeBegin',
-        placeholder: 'Thời gian'
-      }, {
-        name: 'phoneStadiumOwner',
-        placeholder: 'Số đt chủ sân'
-      }],
-      buttons: [{
-        text: 'Hủy'
-      }, {
-        text: 'Thêm',
+    this.firebaseService.getStaduim().subscribe(data => {
+      let listStatium = data.items;
+      let alert = this.alertCtrl.create();
+      alert.setTitle('Danh sách sân bóng');
+      listStatium.forEach(element => {
+        alert.addInput({ type: 'radio', label: element.nameStadium, value: element });
+      });
+      alert.addButton('Hủy');
+      alert.addButton({
+        text: 'Ok',
         handler: data => {
-          this.tongQuy = this.tongQuy - parseInt(data.monney)
-          this.downPayment.push(data)
+          let alertConfirm = this.alertCtrl.create();
+          alertConfirm.setTitle('Đặt cọc');
+          alertConfirm.setMessage(
+            'Tên sân:' + '&emsp;' + data.nameStadium + '<br>' +
+            'Số đt:' + '&emsp;&emsp;' + data.phone + '<br>' +
+            'Địa chỉ:' + '&emsp;' + data.address + '<br>' +
+            'Thời gian:' + '&emsp;' + data.timeBegin);
+          alertConfirm.addInput({ type: 'number', name: 'monney', placeholder: 'Số tiền đặt cọc' });
+          alertConfirm.addButton('Hủy');
+          alertConfirm.addButton({
+            text: 'Ok',
+            handler: dataConfirm => {
+              let alert1 = this.alertCtrl.create();
+              alert1.setMessage("Bạn có chắc muốn đặt sân?");
+              alert1.addButton('Không');
+              alert1.addButton({
+                text: 'Có',
+                handler: () => {
+                  let monney = parseInt(dataConfirm.monney)
+                  this.tongQuy = this.tongQuy - monney;
+                  this.downPayment.push({
+                    nameOfStadium: data.nameStadium,
+                    monney: monney,
+                    address: data.address,
+                    timeBegin: data.timeBegin,
+                    phoneStadiumOwner: data.phone
+                  });
+                  this.itemHistoryTest.push({
+                    name: data.nameStadium,
+                    type: "Chi",
+                    monney: monney
+                  });
+                }
+              });
+              alert1.present();
+            }
+          })
+          alertConfirm.present();
         }
-      }]
-    });
-    alert.present();
+      })
+      alert.present();
+    })
   }
   /**Thanh toán*/
   doPaymentItem(item: downPayment, index: number) {
@@ -229,9 +265,11 @@ export class BdpManageBudgetPage {
       title: 'Thanh toán ' + item.nameOfStadium,
       message: item.phoneStadiumOwner.toString(),
       inputs: [{
+        type: 'number',
         name: 'monney',
         placeholder: 'Tổng tiền thuê sân'
       }, {
+        type: 'number',
         name: 'itemCost',
         placeholder: 'Khoản khác'
       }],
@@ -265,7 +303,7 @@ export class BdpManageBudgetPage {
     alert.present();
   }
   /**Hủy đặt sân */
-  deletePaymentItem(item: any) {
+  deletePaymentItem(item: any, index: number) {
     let alert = this.alertCtrl.create({
       message: 'Bạn có chắc muốn hủy đặt sân',
       buttons: [{
@@ -273,7 +311,13 @@ export class BdpManageBudgetPage {
       }, {
         text: 'Có',
         handler: () => {
-          this.downPayment.splice(item, 1)
+          this.downPayment.splice(index, 1);
+          this.tongQuy = this.tongQuy + item.monney;
+          this.itemHistoryTest.push({
+            name: item.nameOfStadium,
+            type: 'Thu',
+            monney: item.monney
+          })
         }
       }]
     });
