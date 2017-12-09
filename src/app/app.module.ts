@@ -8,6 +8,10 @@ import { HttpClientModule } from "@angular/common/http";
 import { MyApp } from './app.component';
 import { BdpModule } from '../providers/bdp-module';
 
+import { AppControllerProvider } from "../providers/classes/app-controller/app-controller";
+import { FirebaseServiceProvider } from "../providers/classes/firebase-service/firebase-service";
+
+
 @NgModule({
   declarations: [
     MyApp
@@ -25,7 +29,9 @@ import { BdpModule } from '../providers/bdp-module';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    BdpModule
+    BdpModule,
+    AppControllerProvider,
+    FirebaseServiceProvider
   ]
 })
 export class AppModule {}

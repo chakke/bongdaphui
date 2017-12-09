@@ -11,7 +11,7 @@
   <div class="div-index">
     <div class="div-index-item">
       <span class="span-index">Tổng quỹ:
-        <span class="span-count-monney">{{tongQuy}}</span>
+        <span class="span-count-monney">{{tongQuy}}vnđ</span>
       </span>
     </div>
     <div class="div-index-box">
@@ -23,7 +23,7 @@
           <div class="div-box-item-content" *ngFor="let item of sponsor">
             <span class="sp-box">
               <span class="sp-name-sponsor">{{item.name}}</span> đã tài trợ
-              <span class="sp-monney">{{item.monney}}</span>
+              <span class="sp-monney">{{item.monney}}vnđ</span>
             </span>
           </div>
         </div>
@@ -36,7 +36,7 @@
           <div class="div-box-item-content" *ngFor="let item of personer">
             <span class="sp-box">
               <span class="sp-name-personor">{{item.name}}</span> đã nộp
-              <span class="sp-monney">{{item.monney}}</span> vào quỹ</span>
+              <span class="sp-monney">{{item.monney}}vnđ</span> vào quỹ</span>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
           <div class="div-box-item-content" *ngFor="let item of monneyGiveBack">
             <span class="sp-box">
               <span class="sp-name-stadium">{{item.name}}</span> đã trả lại
-              <span class="sp-monney">{{item.monney}}</span> tiền đặt cọc</span>
+              <span class="sp-monney">{{item.monney}}vnđ</span> tiền đặt cọc</span>
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@
         </ion-item>
         <ion-item-options>
           <button ion-button color="primary" (tap)="doPaymentItem(item,i)">Pay</button>
-          <button ion-button color="danger" (tap)="deletePaymentItem(i)">Cancel</button>
+          <button ion-button color="danger" (tap)="deletePaymentItem(item,i)">Cancel</button>
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
@@ -76,20 +76,6 @@
       <button ion-button (tap)="addDownPayment()">Add</button>
     </div>
   </div>
-  <!-- <div class="div-index">
-    <div class="div-index-item">
-      <span class="span-index">Thanh toán</span>
-    </div>
-    <ion-list class="div-index-box">
-      <ion-item-sliding class="div-item-stadium" *ngFor="let item of downPayment">
-        <ion-item class="item-stadium">
-          <span class="span-title">
-            <span class="sp-name-stadium">{{item.nameOfStadium}}</span>
-          </span>
-        </ion-item>
-      </ion-item-sliding>
-    </ion-list>
-  </div> -->
   <div class="div-index">
     <div class="div-index-item">
       <span class="span-index">Lịch sử</span>
@@ -98,7 +84,7 @@
       <div class="div-item-history" *ngFor="let item of itemHistoryTest">
         <span class="span-item-history">
           <span class="sp-item-his-type">{{item.type}}</span>
-          <span class="sp-item-his-monney">{{item.monney}}đ</span> từ
+          <span class="sp-item-his-monney">{{item.monney}}vnđ</span> từ
           <span class="sp-item-his-name">{{item.name}}</span>
         </span>
       </div>
