@@ -23,4 +23,8 @@ export class BdpHomePage {
     this.navCtrl.push("BdpManageBudgetPage");
 
   }
+
+  onClickDatSan(){
+    this.navCtrl.push("BdpDatSanPage");
+  }
 }
