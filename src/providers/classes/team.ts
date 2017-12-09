@@ -5,12 +5,14 @@ export class Team {
     id: number;
     name: string;
     members: Array<Player>;
+    fakePlayer: Array<Player>;
     strategies: Array<Map>
 
     constructor() {
         this.id = -1;
         this.name = "";
         this.members = [];
+        this.fakePlayer = [];
         this.strategies = [];
     }
 
@@ -23,14 +25,29 @@ export class Team {
         this.members.push(member);
     }
 
-    removeMember(member: Player){
-        for(let i = 0; i < this.members.length;i++){
-            if(this.members[i].id == member.id){
+    removeMember(member: Player) {
+        for (let i = 0; i < this.members.length; i++) {
+            if (this.members[i].id == member.id) {
                 this.members.splice(i, 1);
                 break;
             }
         }
     }
+
+    addFakeMember(member: Player) {
+        member.id += this.fakePlayer.length;
+        this.fakePlayer.push(member);
+    }
+
+    removeFakeMember(member: Player) {
+        for (let i = 0; i < this.fakePlayer.length; i++) {
+            if (this.fakePlayer[i].id == member.id) {
+                this.fakePlayer.splice(i, 1);
+                break;
+            }
+        }
+    }
+
 
     addStrategy(strategy: Map) {
         this.strategies.push(strategy);
@@ -42,7 +59,7 @@ export class TeamOverview {
     name: string;
     noMembers: number;
 
-    onResponseData(data){
+    onResponseData(data) {
         this.id = data.id;
         this.name = data.name;
         this.noMembers = data.members.length;

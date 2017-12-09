@@ -155,8 +155,8 @@ export class BdpTeamAddMemberPage {
 
   addMember() {
     if (this.currentView == this.mDatas.segments[0].id) {
-      this.mPlayer.onResponseData("-1", this.createForm.value.name, this.createForm.value.shirtNumber, this.mPlayer.avatar, this.createForm.value.phone)
-      this.mBdpModule.addTeamMember(this.mDatas.teamId, this.mPlayer);
+      this.mPlayer.onResponseData("-", this.createForm.value.name, this.createForm.value.shirtNumber, this.mPlayer.avatar, this.createForm.value.phone)
+      this.mBdpModule.addTeamFakeMember(this.mDatas.teamId, this.mPlayer);
     }
     else {
       // send request to User 'this.resultPlayer'

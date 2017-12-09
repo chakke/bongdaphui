@@ -40,4 +40,8 @@ export class BdpManageTeamPage {
     this.navCtrl.push("BdpTeamDetailPage", { id: team.id });
   }
 
+  onClickAddTeam(){
+    
+  }
+
 }

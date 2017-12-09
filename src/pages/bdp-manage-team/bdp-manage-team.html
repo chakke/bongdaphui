@@ -8,6 +8,9 @@
 
 
 <ion-content padding>
+    <div class="add-button a3-container a3-items-center a3-justify-center" (click)="onClickAddTeam()">
+        <span style="font-size: 2em">+</span>
+    </div>
     <ion-list>
         <ion-item *ngFor="let team of teams" (click)="onClickTeam(team)">
             <div class="a1-fill-parent a3-container a3-items-center a3-justify-between">

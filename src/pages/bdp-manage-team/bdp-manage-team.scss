@@ -2,4 +2,14 @@ page-bdp-manage-team {
     .arr {
         color: lightblue;
     }
+    .add-button {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        width: 3em;
+        height: 3em;
+        border-radius: 50%;
+        border: 2px solid black;
+        z-index: 10;
+    }
 }

@@ -1,0 +1,44 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>{{mDatas.title}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list>
+        <form [formGroup]="createForm">
+            <ion-item>
+                <div class="a3-container a3-justify-center a1-width-100">
+                    <div class="avatar" [ngStyle]="{'background-image': 'url('+ mPlayer.avatar + ')'}">
+                    </div>
+                </div>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>{{mDatas.playerInfo.name}}</ion-label>
+                <ion-input [class.invalid]="createForm.controls.name.invalid && submitAttempt" formControlName="name" type="text"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="createForm.controls.name.invalid && submitAttempt">
+                <p class="noti">Tên bao gồm chữ và số, có độ dài
+                    < 30</p>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>{{mDatas.playerInfo.phone}}</ion-label>
+                <ion-input formControlName="phone" type="text"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>{{mDatas.playerInfo.email}}</ion-label>
+                <ion-input formControlName="email" type="text"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label stacked>{{mDatas.playerInfo.shirtNumber}}</ion-label>
+                <ion-input [class.invalid]="createForm.controls.shirtNumber.invalid && submitAttempt" formControlName="shirtNumber" type="number"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="createForm.controls.shirtNumber.invalid && submitAttempt">
+                <p class="noti">Số áo không hợp lệ</p>
+            </ion-item>
+        </form>
+    </ion-list>
+</ion-content>

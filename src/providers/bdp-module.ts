@@ -90,6 +90,21 @@ export class BdpModule {
     }
   }
   
+  addTeamFakeMember(teamId: number, member: Player) {
+    let team = this.getTeamById(teamId);
+
+    if (team) {
+      team.addFakeMember(member);
+    }
+  }
+  
+  deleteTeamFakeMember(teamId: number, member: Player) {
+    let team = this.getTeamById(teamId);
+
+    if (team) {
+      team.removeFakeMember(member);
+    }
+  }
   searchPlayer(id: string) {
     return new Promise((res, rej) => {
       for (let i = 0; i < this.players.length; i++) {

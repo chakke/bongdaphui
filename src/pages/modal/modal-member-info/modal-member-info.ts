@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ViewController } from 'ionic-angular';
 
 import { Player } from '../../../providers/classes/player';
 
@@ -11,13 +11,18 @@ import { Player } from '../../../providers/classes/player';
 export class ModalMemberInfo {
 
   mPlayer: Player;
+  isFakePlayer = false;
 
   constructor(public navCtrl: NavController,
+    public mViewController: ViewController,
     public mAlertController: AlertController,
     public navParams: NavParams) {
     if (navParams.data['member']) {
       this.mPlayer = navParams.data['member'];
       console.log(this.mPlayer);
+      if (this.mPlayer.id.charAt(0) == '-') {
+        this.isFakePlayer = true;
+      }
     }
   }
 
@@ -27,17 +32,23 @@ export class ModalMemberInfo {
 
   onClickClose() {
     console.log("onClickClose");
-    this.navCtrl.pop({ animate: false });
+    this.mViewController.dismiss({ onDetele: false }, "", { animate: false });
+    // this.navCtrl.pop();
   }
 
 
   onClickView() {
-    this.navCtrl.push("BdpUserInfoPage", { id: this.mPlayer.id });
+    if (!this.isFakePlayer) {
+      this.navCtrl.push("BdpUserInfoPage", { id: this.mPlayer.id });
+    }
+    else {
+      this.navCtrl.push("BdpTeamEditFakePage", { id: this.mPlayer.id });
+    }
   }
 
   onClickDelete() {
     console.log("onClickDelete");
-    this.navCtrl.pop({animate: false});
+    this.mViewController.dismiss({ onDetele: true }, "", { animate: false });
   }
 
 }

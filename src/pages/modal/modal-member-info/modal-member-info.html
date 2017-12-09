@@ -49,7 +49,7 @@
                         </ion-col>
                     </ion-row>
                     <ion-row class="a3-justify-center">
-                        <button ion-button (click)="onClickView()">View</button>
+                        <button ion-button (click)="onClickView()">{{isFakePlayer?'Edit':'View'}}</button>
                         <button ion-button (click)="onClickDelete()">Delete</button>
                     </ion-row>
                 </ion-grid>

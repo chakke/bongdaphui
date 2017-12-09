@@ -37,8 +37,10 @@ export class BdpTeamDetailPage {
     console.log(member);
     let modal = this.mModalController.create("ModalMemberInfo", { member: member });
 
-    modal.onWillDismiss(() => {
-      this.confirmDelete(member);
+    modal.onWillDismiss((data) => {
+      if (data && data.onDetele) {
+        this.confirmDelete(member);
+      }
     });
 
     modal.present({ animate: false });
@@ -83,6 +85,11 @@ export class BdpTeamDetailPage {
   }
 
   deleteMember(member: Player) {
-    this.mBdpModule.deleteTeamMember(this.team.id, member);
+    if (member.id.charAt(0) == '-') {
+      this.mBdpModule.deleteTeamFakeMember(this.team.id, member);
+    }
+    else{
+      this.mBdpModule.deleteTeamMember(this.team.id, member);
+    }
   }
 }
