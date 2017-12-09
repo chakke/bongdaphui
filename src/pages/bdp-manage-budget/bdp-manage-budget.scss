@@ -1,3 +1,87 @@
 page-bdp-manage-budget {
+    .div-index{
+        padding-top: 1rem;
+        .div-index-item{
+            padding: 1.5rem;
+            font-size: 2rem;  
+            background-color: aliceblue;
+            .span-index{
+                color: red;
+                .span-count-monney{
+                    background-color: red;
+                    color: white;
+                }
+            }
+        }
+        
+        .div-index-box{
+            margin: 0;
+            .div-box-item{
+                background-color: aquamarine;
+                .div-title{
+                    padding-bottom: 0.5rem;
+                    padding-top: 0.5rem; 
+                    .span-title{
+                     color: blue;
+                     padding-left: 2rem;
+                     font-size: 1.6rem;
+                    }
+                }
+                .box-title{
+                    padding-left: 3rem;
+                    .div-box-item-content{
+                        .sp-box{
+                            .sp-name-sponsor{
+                                
+                            }
+                            .sp-name-personor{
+                                
+                            }
+                            .sp-name-stadium{
+                                
+                            }
+                            .sp-monney{
+                                background-color: red;
+                                color: white;
+                            }
+                        }
+                       
+                    }
+                }
+            }
+            .div-item-stadium{
+                background-color: aquamarine;
+                .item-stadium{
+                    background-color: aquamarine;
+                    .span-title{
+                        .sp-name-stadium{
 
+                        }
+                        .sp-time{
+                            color: red;
+                        }
+                    }
+                }
+            }
+           
+           .div-item-history{
+                .span-item-history{
+                    padding-left: 2rem;
+                    .sp-item-his-type{
+                        color: red;                        
+                    }
+                    .sp-item-his-monney{
+                        color: green    
+                    }
+                    .sp-item-his-name{
+                        color: blue;
+                    }
+                }
+                
+           } 
+        }
+        .add-item{
+            text-align: center;
+        }
+    }
 }
