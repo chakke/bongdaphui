@@ -8,62 +8,62 @@
 
 
 <ion-content>
-  <div class="div-index">
-    <div class="div-index-item">
-      <span class="span-index">Tổng quỹ:
-        <span class="span-count-monney">{{tongQuy}}vnđ</span>
+  <div>
+    <div class="a1-padding main-background">
+      <span class="big-font main-color">Tổng quỹ:
+        <span class="danger-color">{{tongQuy}}vnđ</span>
       </span>
     </div>
-    <div class="div-index-box">
-      <div class="div-box-item">
-        <div class="div-title" (tap)="addSponsorMonney()">
+    <div>
+      <div>
+        <div class="a1-padding-left a1-padding-top normal-font main-color" (tap)="addSponsorMonney()">
           <span class="span-title">Nhà tài trợ</span>
         </div>
-        <div class="box-title">
-          <div class="div-box-item-content" *ngFor="let item of sponsor">
-            <span class="sp-box">
-              <span class="sp-name-sponsor">{{item.name}}</span> đã tài trợ
-              <span class="sp-monney">{{item.monney}}vnđ</span>
+        <div class="a1-padding-left">
+          <div *ngFor="let item of sponsor">
+            <span class="small-font">
+              <span class="main-color">{{item.name}}</span> đã tài trợ
+              <span class="danger-color">{{item.monney}}vnđ</span>
             </span>
           </div>
         </div>
       </div>
-      <div class="div-box-item">
-        <div class="div-title" (tap)="addPersonerMonney()">
+      <div>
+        <div class="a1-padding-left a1-padding-top normal-font main-color" (tap)="addPersonerMonney()">
           <span class="span-title">Cá nhân</span>
         </div>
-        <div class="box-title">
-          <div class="div-box-item-content" *ngFor="let item of personer">
-            <span class="sp-box">
-              <span class="sp-name-personor">{{item.name}}</span> đã nộp
-              <span class="sp-monney">{{item.monney}}vnđ</span> vào quỹ</span>
+        <div class="a1-padding-left">
+          <div *ngFor="let item of personer">
+            <span class="small-font">
+              <span class="main-color">{{item.name}}</span> đã nộp
+              <span class="danger-color">{{item.monney}}vnđ</span> vào quỹ</span>
           </div>
         </div>
       </div>
-      <div class="div-box-item">
-        <div class="div-title" (tap)="addMoreMonney()">
+      <div>
+        <div class="a1-padding-left a1-padding-top normal-font main-color" (tap)="addMoreMonney()">
           <span class="span-title">Khác</span>
         </div>
-        <div class="box-title">
-          <div class="div-box-item-content" *ngFor="let item of monneyGiveBack">
-            <span class="sp-box">
-              <span class="sp-name-stadium">{{item.name}}</span> đã trả lại
-              <span class="sp-monney">{{item.monney}}vnđ</span> tiền đặt cọc</span>
+        <div class="a1-padding-left">
+          <div *ngFor="let item of monneyGiveBack">
+            <span class="small-font">
+              <span class="main-color">{{item.name}}</span> đã nộp
+              <span class="danger-color">{{item.monney}}vnđ</span> vào quỹ</span>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="div-index">
-    <div class="div-index-item">
-      <span class="span-index">Lịch Thi Đấu</span>
+  <div>
+    <div class="a1-padding main-background">
+      <span class="big-font main-background main-color">Lịch Thi Đấu</span>
     </div>
-    <ion-list class="div-index-box" >
-      <ion-item-sliding class="div-item-stadium" *ngFor="let item of downPayment, let i = index">
-        <ion-item class="item-stadium" (tap)="showDownPayment(item)">
-          <span class="span-title">
-            <span class="sp-name-stadium">{{item.nameOfStadium}}</span>
-            <span class="sp-time">{{item.timeBegin}}</span>
+    <ion-list class="a1-no-margin">
+      <ion-item-sliding *ngFor="let item of downPayment, let i = index">
+        <ion-item (tap)="showDownPayment(item)">
+          <span class="normal-font">
+            <span class="main-color">{{item.nameOfStadium}}</span>
+            <span class="danger-color float-right">{{item.timeBegin}}</span>
           </span>
         </ion-item>
         <ion-item-options>
@@ -72,20 +72,20 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-    <div class="add-item">
-      <button ion-button (tap)="addDownPayment()">Add</button>
+    <div class="a1-text-center a1-no-padding a1-no-margin">
+      <button ion-button (tap)="addDownPayment()">Đặt sân</button>
     </div>
   </div>
-  <div class="div-index">
-    <div class="div-index-item">
-      <span class="span-index">Lịch sử</span>
+  <div>
+    <div class="a1-padding main-background">
+      <span class="big-font main-color">Lịch sử</span>
     </div>
-    <div class="div-index-box">
-      <div class="div-item-history" *ngFor="let item of itemHistoryTest">
-        <span class="span-item-history">
-          <span class="sp-item-his-type">{{item.type}}</span>
-          <span class="sp-item-his-monney">{{item.monney}}vnđ</span> từ
-          <span class="sp-item-his-name">{{item.name}}</span>
+    <div class="a1-padding-left">
+      <div *ngFor="let item of itemHistoryTest">
+        <span class="small-font">
+          <span class="main-color">{{item.type}}</span>
+          <span class="danger-color">{{item.monney}}vnđ</span> từ
+          <span class="main-color">{{item.name}}</span>
         </span>
       </div>
     </div>
