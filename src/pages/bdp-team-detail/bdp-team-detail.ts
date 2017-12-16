@@ -35,7 +35,7 @@ export class BdpTeamDetailPage {
 
   onClickMember(member: Player) {
     console.log(member);
-    let modal = this.mModalController.create("ModalMemberInfo", { member: member });
+    let modal = this.mModalController.create("ModalMemberInfo", { memberId: member.id, teamId: this.team.id });
 
     modal.onWillDismiss((data) => {
       if (data && data.onDetele) {
