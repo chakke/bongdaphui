@@ -1,0 +1,18 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Quỹ thu</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngFor="let item of listCollectMonney.reverse()">
+    <span class="normal-font">
+      <span class="main-color">{{item.name}} : </span>
+      <span class="danger-color">{{item.monney}}vnđ</span>
+    </span>
+  </div>
+</ion-content>

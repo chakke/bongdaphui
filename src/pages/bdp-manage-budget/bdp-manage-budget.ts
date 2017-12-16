@@ -6,26 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Stadium, StadiumInterface } from "../../providers/classes/interface/stadium";
 import { BdpModule } from "../../providers/bdp-module";
 
-interface itemHistory {
-  type: string;
-  name: string;
-  monney: number
-}
-
-interface Sponsor {
-  monney: number;
-  name: string
-}
-
-interface Personer {
-  monney: number;
-  name: string;
-}
-
-interface monneyGiveBack {
-  name: string;
-  monney: number;
-}
+import { monney } from "../../providers/classes/interface/monney";
 
 interface downPayment {
   nameOfStadium: string;
@@ -35,15 +16,7 @@ interface downPayment {
   phoneStadiumOwner: number;
 }
 
-interface Payment {
-  downPayment: number;
-  payment: number
-  itemCost: number;
-  nameOfStadium: string;
-  address: string;
-  timeBegin: string;
-  phoneStadiumOwner: number;
-}
+
 
 @IonicPage()
 @Component({
@@ -53,17 +26,40 @@ interface Payment {
 export class BdpManageBudgetPage {
 
   tongQuy: number = 0;
-  itemHistoryTest: itemHistory[] = [];
-  sponsor: Sponsor[] = [];
-  personer: Personer[] = [];
-  monneyGiveBack: monneyGiveBack[] = [];
+  monneyCollect: number = 50000;
+  collectMonney: monney[] = [
+    // {
+    //   name: "a",
+    //   monney: 50000
+    // }, {
+    //   name: "b",
+    //   monney: 1000
+    // }, {
+    //   name: "c",
+    //   monney: 1000
+    // }, {
+    //   name: "d",
+    //   monney: 1000
+    // }
+  ];
+  spendMonney: monney[] = [
+    // {
+    //   name: "a",
+    //   monney: 1000
+    // },
+    // {
+    //   name: "b",
+    //   monney: 100000
+    // }, {
+    //   name: "c",
+    //   monney: 1000
+    // }, {
+    //   name: "d",
+    //   monney: 1000
+    // }
+  ];
+  walletMonney: any[];
 
-  // [
-  //   { type: "thu", name: "BoBo", monney: 50000 },
-  //   { type: "thu", name: "LomDom Club", monney: 170000 },
-  //   { type: "chi", name: "Sân Tuyệt Vọng", monney: 50000 },
-  //   { type: "chi", name: "Sân Cháy", monney: 500000 },
-  // ];
 
 
 
@@ -73,8 +69,6 @@ export class BdpManageBudgetPage {
     { nameOfStadium: "Sân Chợ Lớn", monney: 75000, address: "31 Cầu Giấy", timeBegin: "6:30pm", phoneStadiumOwner: 223789 },
     { nameOfStadium: "Sân Cháy", monney: 150000, address: "78 Đống Đa", timeBegin: "4:30pm", phoneStadiumOwner: 66683 }
   ];
-
-  payment: Payment[] = [];
 
 
   constructor(
@@ -105,118 +99,199 @@ export class BdpManageBudgetPage {
   }
 
   /**---Tổng quỹ--- */
-  /**Thêm quỹ từ nhà tài trợ */
-  addSponsorMonney() {
-    let alert = this.alertCtrl.create({
-      title: 'Nhà tài trợ',
-      inputs: [{
-        name: 'nameOfSponsor',
-        placeholder: 'Tên nhà tài trợ'
-      }, {
-        type: 'number',
-        name: 'monney',
-        placeholder: 'Số tiền'
-      }],
-      buttons: [{
-        text: 'Hủy'
-      }, {
-        text: 'Thêm',
-        handler: data => {
-          let sponsorMonney: number = parseInt(data.monney);
-          this.tongQuy = this.tongQuy + sponsorMonney;
-          this.sponsor.push({
-            name: data.nameOfSponsor,
-            monney: data.monney
-          });
-          this.itemHistoryTest.push({
-            name: data.nameOfSponsor,
-            type: "Thu",
-            monney: sponsorMonney
-          });
-        }
-      }]
+  /**Nộp quỹ */
+  addMonney() {
+    let alertMonney = this.alertCtrl.create();
+    alertMonney.setTitle('Thu quỹ');
+    alertMonney.addInput({
+      type: 'radio',
+      label: '10000đ',
+      value: '10000',
+      checked: this.checked(10000)
     });
-    alert.present();
-  }
-  /**Thêm quỹ từ cá nhân */
-  addPersonerMonney() {
-    let alertClub = this.alertCtrl.create();
-    alertClub.setTitle('Tên thành viên');
-    let listClub = this.mBdpModule.getTeams();
-    listClub[0].members.forEach(item => {
-      alertClub.addInput({
-        type: 'radio',
-        label: item.name + item.number,
-        value: item.name + item.number
-      });
+    alertMonney.addInput({
+      type: 'radio',
+      label: '20000đ',
+      value: '20000',
+      checked: this.checked(20000)      
     });
-    alertClub.addButton('Cancel');
-    alertClub.addButton({
+    alertMonney.addInput({
+      type: 'radio',
+      label: '50000đ',
+      value: '50000',
+      checked: this.checked(50000)   
+    });
+    alertMonney.addInput({
+      type: 'radio',
+      label: '100000đ',
+      value: '100000',
+      checked: this.checked(100000)   
+    });
+    alertMonney.addInput({
+      type: 'radio',
+      label: 'Nhập số khác',
+      value: 'other',
+    });
+    alertMonney.addButton('Hủy');
+    alertMonney.addButton({
       text: 'Ok',
       handler: data => {
-        let alertMember = this.alertCtrl.create();
-        alertMember.setTitle(data);
-        alertMember.addInput({
-          name: 'monney',
-          type: 'number',
-          placeholder: 'Số tiền nộp'
-        });
-        alertMember.addButton('Hủy');
-        alertMember.addButton({
-          text: 'Ok',
-          handler: data1 => {
-            let personerMonney: number = parseInt(data1.monney);
-            this.tongQuy = this.tongQuy + personerMonney;
-            this.personer.push({
-              name: data,
-              monney: personerMonney
+        if (data == "other") {
+          let otherMonneyAlert = this.alertCtrl.create();
+          otherMonneyAlert.setTitle('Nhập số khác');
+          otherMonneyAlert.addInput({
+            type: 'number',
+            name: 'otherMonney',
+            placeholder: 'Nhập số tiền'
+          });
+          otherMonneyAlert.addButton('Hủy');
+          otherMonneyAlert.addButton({
+            text: 'Ok',
+            handler: otherMonney => {
+              let alertConfirm = this.alertCtrl.create();
+              alertConfirm.setMessage('Thu' + otherMonney.otherMonney + 'đ từ các thành viên?');
+              alertConfirm.addButton('Hủy');
+              alertConfirm.addButton({
+                text: 'Ok',
+                handler: () => {
+                  this.monneyCollect = parseInt(otherMonney.otherMonney);
+                }
+              });
+              alertConfirm.present();
+            }
+          });
+          otherMonneyAlert.present();
+        } else {
+          let alertConfirm = this.alertCtrl.create();
+          alertConfirm.setMessage('Thu' + data + 'đ từ các thành viên?');
+          alertConfirm.addButton('Hủy');
+          alertConfirm.addButton({
+            text: 'Ok',
+            handler: () => {
+              this.monneyCollect = parseInt(data);
+            }
+          });
+          alertConfirm.present();
+        }
+      }
+    });
+    alertMonney.present();
+  }
+  checked(number: number): boolean {
+    let checked: boolean;
+    if (number == this.monneyCollect) {
+      checked = true;
+    } else {
+      checked = false;
+    }
+    return checked;
+  }
+  /**Chi tiết thu */
+  collectDetail() {
+    this.navCtrl.push("CollectDetailPage", { collectMonney: this.collectMonney })
+  }
+  /**Chi tiết chi */
+  spendDetail() {
+    this.navCtrl.push("SpendDetailPage", { spendMonney: this.spendMonney })
+  }
+  /**Chi tiết quỹ */
+  walletDetail() {
+    this.navCtrl.push("WalletDetailPage", { walletDetail: {
+      tongQuy: this.tongQuy,
+      monneyCollect: this.monneyCollect,
+      members: this.mBdpModule.getTeams()[0].members
+    }})
+  }
+  /**Thêm quỹ */
+  addPayment() {
+    let collectType = this.alertCtrl.create();
+    collectType.setTitle('Loại khoản thu');
+    collectType.setMessage('Chọn khoản thu:')
+    collectType.addInput({
+      type: 'radio',
+      label: 'Thu từ thành viên',
+      value: 'member'
+    });
+    collectType.addInput({
+      type: 'radio',
+      label: 'Thu từ khoản khác',
+      value: 'other'
+    });
+    collectType.addButton('Hủy');
+    collectType.addButton({
+      text: 'Ok',
+      handler: dataCollect => {
+        if (dataCollect == "member") {
+          let alertClub = this.alertCtrl.create();
+          alertClub.setTitle('Tên thành viên');
+          let listClub = this.mBdpModule.getTeams();
+          listClub[0].members.forEach(item => {
+            alertClub.addInput({
+              type: 'radio',
+              label: item.name + item.number,
+              value: item.name + item.number
             });
-            this.itemHistoryTest.push({
-              name: data,
-              type: "Thu",
-              monney: personerMonney
-            });
-          }
-        })
-        alertMember.present();
+          });
+          alertClub.addButton('Hủy');
+          alertClub.addButton({
+            text: 'Ok',
+            handler: data => {
+              let alertMember = this.alertCtrl.create();
+              alertMember.setTitle(data);
+              alertMember.addInput({
+                name: 'monney',
+                type: 'number',
+                placeholder: 'Số tiền nộp'
+              });
+              alertMember.addButton('Hủy');
+              alertMember.addButton({
+                text: 'Ok',
+                handler: data1 => {
+                  let personerMonney: number = parseInt(data1.monney);
+                  this.tongQuy = this.tongQuy + personerMonney;
+                  this.collectMonney.push({
+                    name: data,
+                    monney: personerMonney
+                  });
+                }
+              })
+              alertMember.present();
+
+            }
+          })
+          alertClub.present();
+        }
+        else if (dataCollect == "other") {
+          let otherCollect = this.alertCtrl.create();
+          otherCollect.setTitle('Khoản thu khác');
+          otherCollect.addInput({
+            name: 'name',
+            type: 'text',
+            placeholder: 'Tên nguồn thu khác'
+          });
+          otherCollect.addInput({
+            name: 'monney',
+            type: 'number',
+            placeholder: 'Số tiền'
+          });
+          otherCollect.addButton('Hủy');
+          otherCollect.addButton({
+            text: 'Ok',
+            handler: data => {
+              let otherMonney: number = parseInt(data.monney);
+              this.tongQuy = this.tongQuy + otherMonney;
+              this.collectMonney.push({
+                name: data.name,
+                monney: otherMonney
+              })
+            }
+          })
+          otherCollect.present();
+        }
 
       }
     })
-    alertClub.present();
-
-  }
-  /**Khoản khác */
-  addMoreMonney() {
-    let alert = this.alertCtrl.create({
-      title: 'Tiền khác',
-      inputs: [{
-        name: 'nameOfStadium',
-        placeholder: 'Tên đại diện'
-      }, {
-        type: 'number',
-        name: 'monney',
-        placeholder: 'Số tiền'
-      }],
-      buttons: [{
-        text: 'Hủy'
-      }, {
-        text: 'Thêm',
-        handler: data => {
-          let giveBackMonney: number = parseInt(data.monney);
-          this.tongQuy = this.tongQuy + giveBackMonney;
-          this.monneyGiveBack.push({
-            name: data.nameOfStadium,
-            monney: giveBackMonney
-          });
-          this.itemHistoryTest.push({
-            name: data.nameOfStadium,
-            type: "Thu",
-            monney: giveBackMonney
-          });
-        }
-      }]
-    });
-    alert.present();
+    collectType.present();
   }
 
   /**---Lịch thi đấu---*/
@@ -283,9 +358,8 @@ export class BdpManageBudgetPage {
                     timeBegin: data.timeBegin,
                     phoneStadiumOwner: data.phone
                   });
-                  this.itemHistoryTest.push({
+                  this.spendMonney.push({
                     name: data.nameStadium,
-                    type: "Chi",
                     monney: monney
                   });
                 }
@@ -327,9 +401,8 @@ export class BdpManageBudgetPage {
               handler: data1 => {
                 let payment: number = parseInt(data.monney) + parseInt(data.itemCost);
                 this.tongQuy = this.tongQuy - payment;
-                this.itemHistoryTest.push({
+                this.spendMonney.push({
                   name: item.nameOfStadium,
-                  type: 'Chi',
                   monney: payment
                 });
                 this.downPayment.splice(index, 1);
@@ -353,14 +426,24 @@ export class BdpManageBudgetPage {
         handler: () => {
           this.downPayment.splice(index, 1);
           this.tongQuy = this.tongQuy + item.monney;
-          this.itemHistoryTest.push({
+          this.collectMonney.push({
             name: item.nameOfStadium,
-            type: 'Thu',
             monney: item.monney
-          })
+          });
         }
       }]
     });
     alert.present();
   }
+
+  /**Hiển thị item */
+  lastItem(listItem): number {
+    let i = listItem.length;
+    return i
+  }
+  threeLast(listItem): number {
+    let i = listItem.length - 3;
+    return i
+  }
+
 }

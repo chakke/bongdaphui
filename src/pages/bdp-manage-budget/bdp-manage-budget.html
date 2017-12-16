@@ -10,51 +10,39 @@
 <ion-content>
   <div>
     <div class="a1-padding main-background">
-      <span class="big-font main-color">Tổng quỹ:
-        <span class="danger-color">{{tongQuy}}vnđ</span>
+      <span class="big-font main-color">
+        <span  (tap)="walletDetail()">Tổng quỹ:</span>
+        <span class="danger-color float-right" (tap)="addMonney()">{{tongQuy}}vnđ</span>
       </span>
     </div>
     <div>
-      <div>
-        <div class="a1-padding-left a1-padding-top normal-font main-color" (tap)="addSponsorMonney()">
-          <span class="span-title">Nhà tài trợ</span>
-        </div>
-        <div class="a1-padding-left">
-          <div *ngFor="let item of sponsor">
-            <span class="small-font">
-              <span class="main-color">{{item.name}}</span> đã tài trợ
-              <span class="danger-color">{{item.monney}}vnđ</span>
-            </span>
-          </div>
+      <div class="a1-padding-left a1-padding-top normal-font main-color" (tap)="collectDetail()">
+        <span class="span-title">Thu</span>
+      </div>
+      <div class="a1-padding-left">
+        <div *ngFor="let item of collectMonney.reverse(), let i = index">
+          <span class="small-font" *ngIf="i<3">
+            <span class="main-color">{{item.name}}</span> :
+            <span class="danger-color">{{item.monney}}vnđ</span>
+          </span>
         </div>
       </div>
-      <div>
-        <div class="a1-padding-left a1-padding-top normal-font main-color" (tap)="addPersonerMonney()">
-          <span class="span-title">Cá nhân</span>
-        </div>
-        <div class="a1-padding-left">
-          <div *ngFor="let item of personer">
-            <span class="small-font">
-              <span class="main-color">{{item.name}}</span> đã nộp
-              <span class="danger-color">{{item.monney}}vnđ</span> vào quỹ</span>
-          </div>
-        </div>
+    </div>
+    <div>
+      <div class="a1-padding-left a1-padding-top normal-font main-color" (tap)="spendDetail()">
+        <span class="span-title">Chi</span>
       </div>
-      <div>
-        <div class="a1-padding-left a1-padding-top normal-font main-color" (tap)="addMoreMonney()">
-          <span class="span-title">Khác</span>
-        </div>
-        <div class="a1-padding-left">
-          <div *ngFor="let item of monneyGiveBack">
-            <span class="small-font">
-              <span class="main-color">{{item.name}}</span> đã nộp
-              <span class="danger-color">{{item.monney}}vnđ</span> vào quỹ</span>
-          </div>
+      <div class="a1-padding-left">
+        <div *ngFor="let item of spendMonney, let i = index">
+          <span class="small-font" *ngIf="i<3">
+            <span class="main-color">{{item.name}}</span> :
+            <span class="danger-color">{{item.monney}}vnđ</span>
+          </span>
         </div>
       </div>
     </div>
   </div>
-  <div>
+  <div class="a1-padding-top">
     <div class="a1-padding main-background">
       <span class="big-font main-background main-color">Lịch Thi Đấu</span>
     </div>
@@ -76,18 +64,9 @@
       <button ion-button (tap)="addDownPayment()">Đặt sân</button>
     </div>
   </div>
-  <div>
-    <div class="a1-padding main-background">
-      <span class="big-font main-color">Lịch sử</span>
-    </div>
-    <div class="a1-padding-left">
-      <div *ngFor="let item of itemHistoryTest">
-        <span class="small-font">
-          <span class="main-color">{{item.type}}</span>
-          <span class="danger-color">{{item.monney}}vnđ</span> từ
-          <span class="main-color">{{item.name}}</span>
-        </span>
-      </div>
-    </div>
-  </div>
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (tap)="addPayment()">
+      <ion-icon name="md-add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
