@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { FirebaseServiceProvider } from "../../providers/classes/firebase-service/firebase-service";
 import { Observable } from 'rxjs/Observable';
 import { Stadium, StadiumInterface } from "../../providers/classes/interface/stadium";
+import { BdpModule } from "../../providers/bdp-module";
 
 interface itemHistory {
   type: string;
@@ -64,6 +65,8 @@ export class BdpManageBudgetPage {
   //   { type: "chi", name: "Sân Cháy", monney: 500000 },
   // ];
 
+
+
   downPayment: downPayment[] = [
     { nameOfStadium: "Sân lớn", monney: 50000, address: "21 Bà Triệu", timeBegin: "8:00pm", phoneStadiumOwner: 11589 },
     { nameOfStadium: "Sân bé", monney: 100000, address: "11 Đại Cồ Việt", timeBegin: "7:00pm", phoneStadiumOwner: 77893 },
@@ -78,12 +81,27 @@ export class BdpManageBudgetPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
-    public firebaseService: FirebaseServiceProvider
+    public firebaseService: FirebaseServiceProvider,
+    public mBdpModule: BdpModule
   ) {
   }
 
   ionViewDidLoad() {
     // console.log(this.itemHistoryTest);
+    this.getData();
+  }
+
+  getData() {
+    let ts = this.mBdpModule.getTeams();
+    // console.log(ts[0].name);
+
+    ts.forEach(t => {
+      // console.log(t);
+
+      // let team = new TeamOverview();
+      // team.onResponseData(t);
+      // this.teams.push(team);
+    })
   }
 
   /**---Tổng quỹ--- */
@@ -122,44 +140,58 @@ export class BdpManageBudgetPage {
   }
   /**Thêm quỹ từ cá nhân */
   addPersonerMonney() {
-    let alert = this.alertCtrl.create({
-      title: 'Cá nhân',
-      inputs: [{
-        name: 'nameOfPersoner',
-        placeholder: 'Tên thành viên'
-      }, {
-        type: 'number',
-        name: 'monney',
-        placeholder: 'Số tiền'
-      }],
-      buttons: [{
-        text: 'Hủy'
-      }, {
-        text: 'Thêm',
-        handler: data => {
-          let personerMonney: number = parseInt(data.monney);
-          this.tongQuy = this.tongQuy + personerMonney;
-          this.personer.push({
-            name: data.nameOfPersoner,
-            monney: personerMonney
-          });
-          this.itemHistoryTest.push({
-            name: data.nameOfSponsor,
-            type: "Thu",
-            monney: personerMonney
-          });
-        }
-      }]
+    let alertClub = this.alertCtrl.create();
+    alertClub.setTitle('Tên thành viên');
+    let listClub = this.mBdpModule.getTeams();
+    listClub[0].members.forEach(item => {
+      alertClub.addInput({
+        type: 'radio',
+        label: item.name + item.number,
+        value: item.name + item.number
+      });
     });
-    alert.present();
+    alertClub.addButton('Cancel');
+    alertClub.addButton({
+      text: 'Ok',
+      handler: data => {
+        let alertMember = this.alertCtrl.create();
+        alertMember.setTitle(data);
+        alertMember.addInput({
+          name: 'monney',
+          type: 'number',
+          placeholder: 'Số tiền nộp'
+        });
+        alertMember.addButton('Hủy');
+        alertMember.addButton({
+          text: 'Ok',
+          handler: data1 => {
+            let personerMonney: number = parseInt(data1.monney);
+            this.tongQuy = this.tongQuy + personerMonney;
+            this.personer.push({
+              name: data,
+              monney: personerMonney
+            });
+            this.itemHistoryTest.push({
+              name: data,
+              type: "Thu",
+              monney: personerMonney
+            });
+          }
+        })
+        alertMember.present();
+
+      }
+    })
+    alertClub.present();
+
   }
-  /**Tiền đặt cọc trả lại khi hủy kèo */
+  /**Khoản khác */
   addMoreMonney() {
     let alert = this.alertCtrl.create({
-      title: 'Tiền đặt cọc trả lại',
+      title: 'Tiền khác',
       inputs: [{
         name: 'nameOfStadium',
-        placeholder: 'Tên sân bóng'
+        placeholder: 'Tên đại diện'
       }, {
         type: 'number',
         name: 'monney',
@@ -210,7 +242,11 @@ export class BdpManageBudgetPage {
       let alert = this.alertCtrl.create();
       alert.setTitle('Danh sách sân bóng');
       listStatium.forEach(element => {
-        alert.addInput({ type: 'radio', label: element.nameStadium, value: element });
+        alert.addInput({
+          type: 'radio',
+          label: element.nameStadium,
+          value: element
+        });
       });
       alert.addButton('Hủy');
       alert.addButton({
@@ -223,7 +259,11 @@ export class BdpManageBudgetPage {
             'Số đt:' + '&emsp;&emsp;' + data.phone + '<br>' +
             'Địa chỉ:' + '&emsp;' + data.address + '<br>' +
             'Thời gian:' + '&emsp;' + data.timeBegin);
-          alertConfirm.addInput({ type: 'number', name: 'monney', placeholder: 'Số tiền đặt cọc' });
+          alertConfirm.addInput({
+            type: 'number',
+            name: 'monney',
+            placeholder: 'Số tiền đặt cọc'
+          });
           alertConfirm.addButton('Hủy');
           alertConfirm.addButton({
             text: 'Ok',
