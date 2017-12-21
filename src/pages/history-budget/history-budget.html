@@ -1,0 +1,17 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Lịch sử</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="a1-padding normal-font" *ngFor="let item of history">
+    <ion-icon name="md-add"></ion-icon>
+    <span>{{item.type}}</span>
+    <span>{{item.monney}}</span>
+    <span>{{item.name}}</span>
+  </div>
+</ion-content>

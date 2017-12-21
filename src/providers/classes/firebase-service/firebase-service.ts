@@ -5,6 +5,9 @@ import { Observable } from "rxjs/Observable";
 export class FirebaseServiceProvider {
 
     constructor() { }
+    getMember(): Observable<any> {
+        return new Observable
+    }
     getStaduim(): Observable<any> {
         return new Observable(obs => {
             obs.next({

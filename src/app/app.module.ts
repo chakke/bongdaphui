@@ -11,6 +11,18 @@ import { BdpModule } from '../providers/bdp-module';
 import { AppControllerProvider } from "../providers/classes/app-controller/app-controller";
 import { FirebaseServiceProvider } from "../providers/classes/firebase-service/firebase-service";
 
+import { AngularFireDatabaseModule, AngularFireDatabase } from "angularfire2/database";
+import { AngularFireModule } from "angularfire2";
+import { AngularFirestoreModule, AngularFirestore } from "angularfire2/firestore";
+
+export const Config = {
+  apiKey: "AIzaSyAEmI2YOtLnpPuqWvmq_KXQMZNf-LEXadE",
+  authDomain: "bongdaphui-58b4d.firebaseapp.com",
+  databaseURL: "https://bongdaphui-58b4d.firebaseio.com",
+  projectId: "bongdaphui-58b4d",
+  storageBucket: "bongdaphui-58b4d.appspot.com",
+  messagingSenderId: "1064104914696"
+}
 
 @NgModule({
   declarations: [
@@ -19,7 +31,10 @@ import { FirebaseServiceProvider } from "../providers/classes/firebase-service/f
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(Config),
+    AngularFirestoreModule.enablePersistence()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -28,10 +43,10 @@ import { FirebaseServiceProvider } from "../providers/classes/firebase-service/f
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     BdpModule,
     AppControllerProvider,
     FirebaseServiceProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }

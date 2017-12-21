@@ -1,0 +1,20 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Thanh toán</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="big-font main-color">
+    <span>Danh sách các sân chưa thanh toán</span>
+  </div>
+  <div class="a1-padding border-bottom-1" *ngFor="let item of downPayment, let i = index" (tap)="showDownPayment(item,i)">
+    <span class="normal-font">
+      <span class="main-color">{{item.nameOfStadium}}</span>
+      <span class="danger-color float-right">{{item.timeBegin}}</span>
+    </span>
+  </div>
+</ion-content>

@@ -1,8 +1,11 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton>
     <ion-title>
-      <span class="main-color">Quỹ</span>
+      <button class="main-color white-background" (tap)="doBackBudgetPage()">
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </button>
+      <span class="main-color">Số dư quỹ</span>
       <span class="float-right danger-color">{{tongQuy}}đ</span>
     </ion-title>
   </ion-navbar>
@@ -11,18 +14,36 @@
 
 
 <ion-content padding>
-  <div>
+  <div class="normal-font main-color">
+    <span (tap)="quyThangDetail()">Quỹ tháng</span>
+    <select class="no-border-select" [(ngModel)]="quyThang">
+      <option *ngFor="let item of listQuyThang" [ngValue]="item">{{item.time}}</option>
+    </select>
+    <button class="white-background normal-font" (tap)="editQuyThang()">
+      <ion-icon name="ios-create-outline"></ion-icon>
+    </button>
+  </div>
+  <div class="a1-padding-top a1-padding-bottom danger-color">
     <span>Thu quỹ</span>
-    <span>{{monneyCollect}}đ mỗi thành viên</span>
+    <span>{{quyThang.monneyPerMan}}đ mỗi thành viên</span>
   </div>
   <table class="a1-width-100">
     <tr>
       <th>Danh sách</th>
-      <th>Thiếu</th>
+      <th>Đã nộp</th>
+      <th>Còn dư</th>
     </tr>
-    <tr *ngFor="let item of listMember">
-      <td class="a1-text-center">{{item.name+item.number}}</td>
-      <td class="a1-text-center">0vnđ</td>
+    <tr *ngFor="let item of listMember" (tap)="clickMemberAddMonney(item)">
+      <td class="a1-padding a1-text-center">{{item.name}}</td>
+      <td class="a1-padding a1-text-center">{{item.monney | number}}đ</td>
+      <td class="a1-padding a1-text-center">{{item.monney - monneyCollect | number}}đ</td>
     </tr>
   </table>
+
+  <div *ngFor="let item of listQuyThang">{{item.time}}</div>
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (tap)="addMonth()">
+      <ion-icon name="md-add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

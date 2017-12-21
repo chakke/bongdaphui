@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Đặt sân</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="big-font main-color">
+    <span>Danh sách sân đang đặt</span>
+  </div>
+  <div class="a1-padding border-bottom-1" *ngFor="let item of downPayment" (tap)="showDownPayment(item)">
+    <span class="normal-font">
+      <span class="main-color">{{item.nameOfStadium}}</span>
+      <span class="danger-color float-right">{{item.timeBegin}}</span>
+    </span>
+  </div>
+  <ion-fab bottom right>
+    <button ion-fab (tap)="addDownPayment()">
+      <ion-icon name="md-add"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

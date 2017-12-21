@@ -11,61 +11,26 @@
   <div>
     <div class="a1-padding main-background">
       <span class="big-font main-color">
-        <span  (tap)="walletDetail()">Tổng quỹ:</span>
-        <span class="danger-color float-right" (tap)="addMonney()">{{tongQuy}}vnđ</span>
+        <span>Số dư quỹ:</span>
+        <span class="danger-color float-right">{{tongQuy}}đ</span>
       </span>
     </div>
-    <div>
-      <div class="a1-padding-left a1-padding-top normal-font main-color" (tap)="collectDetail()">
-        <span class="span-title">Thu</span>
-      </div>
-      <div class="a1-padding-left">
-        <div *ngFor="let item of collectMonney.reverse(), let i = index">
-          <span class="small-font" *ngIf="i<3">
-            <span class="main-color">{{item.name}}</span> :
-            <span class="danger-color">{{item.monney}}vnđ</span>
-          </span>
-        </div>
-      </div>
+    <div class="a1-width-100 a1-padding border-bottom-1 second-background" (tap)="goCollectPage()">
+      <span class="normal-font">Thu quỹ</span>
     </div>
-    <div>
-      <div class="a1-padding-left a1-padding-top normal-font main-color" (tap)="spendDetail()">
-        <span class="span-title">Chi</span>
-      </div>
-      <div class="a1-padding-left">
-        <div *ngFor="let item of spendMonney, let i = index">
-          <span class="small-font" *ngIf="i<3">
-            <span class="main-color">{{item.name}}</span> :
-            <span class="danger-color">{{item.monney}}vnđ</span>
-          </span>
-        </div>
-      </div>
+    <div class="a1-width-100 a1-padding border-bottom-1 second-background" (tap)="goBookPage()">
+      <span class="normal-font">Đặt sân</span>
+    </div>
+    <div class="a1-width-100 a1-padding border-bottom-1 second-background" (tap)="goPaymentPage()">
+      <span class="normal-font">Thanh toán</span>
+    </div>
+    <div class="a1-width-100 a1-padding border-bottom-1 second-background" (tap)="goHistoryPage()">
+      <span class="normal-font">Lịch sử</span>
     </div>
   </div>
-  <div class="a1-padding-top">
-    <div class="a1-padding main-background">
-      <span class="big-font main-background main-color">Lịch Thi Đấu</span>
-    </div>
-    <ion-list class="a1-no-margin">
-      <ion-item-sliding *ngFor="let item of downPayment, let i = index">
-        <ion-item (tap)="showDownPayment(item)">
-          <span class="normal-font">
-            <span class="main-color">{{item.nameOfStadium}}</span>
-            <span class="danger-color float-right">{{item.timeBegin}}</span>
-          </span>
-        </ion-item>
-        <ion-item-options>
-          <button ion-button color="primary" (tap)="doPaymentItem(item,i)">Pay</button>
-          <button ion-button color="danger" (tap)="deletePaymentItem(item,i)">Cancel</button>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-    <div class="a1-text-center a1-no-padding a1-no-margin">
-      <button ion-button (tap)="addDownPayment()">Đặt sân</button>
-    </div>
-  </div>
+
   <ion-fab right bottom>
-    <button ion-fab color="primary" (tap)="addPayment()">
+    <button ion-fab color="primary" (tap)="test()">
       <ion-icon name="md-add"></ion-icon>
     </button>
   </ion-fab>

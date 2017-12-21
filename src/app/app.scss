@@ -671,3 +671,17 @@ $line-height: 20px;
 .main-background{
     background-color: azure;
 }
+.second-background{
+    background-color: chartreuse;
+}
+.white-background{
+    background-color: white;
+}
+/*Border 1px*/
+.border-bottom-1{
+    border-bottom: 1px solid #222;
+}
+/*Select no border*/
+.no-border-select{
+    border: 0;
+}
